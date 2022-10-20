@@ -1,0 +1,3 @@
+# Wallet
+/api/wallet/mnemonic:
+  $ref: './wallet/wallet.mnemonic.yaml'
