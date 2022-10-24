@@ -1,3 +1,5 @@
 # Wallet
 /api/wallet/mnemonic:
   $ref: './wallet/wallet.mnemonic.yaml'
+/api/wallet:
+  $ref: './wallet/wallet.wallet.yaml'

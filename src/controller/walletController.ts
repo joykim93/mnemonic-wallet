@@ -16,6 +16,18 @@ export default class WalletController extends BaseController {
             ApiResponse.error(res, err);
         }
     }
+
+    static getWalletAddress : IController = async (req, res) => {
+        const mnemonic = Util.String(req.query.mnemonic);
+        const password = Util.String(req.query.password);
+        try {     
+            await WalletService.getWalletAddress(password, mnemonic, res);
+        }
+        catch (err: any) {            
+            err.source = "WalletController:getWalletAddress";
+            ApiResponse.error(res, err);
+        }
+    }
 }
 
 
