@@ -1,0 +1,26 @@
+get: 
+  tags:
+    - WALLET
+  summary: Get Wallet Address
+  description: ""
+  parameters: 
+  - name: mnemonic
+    in: query
+    description: ""
+    required: true
+    schema: 
+      type: string
+  - name: password
+    in: query
+    description: ""
+    required: true
+    schema: 
+      type: string
+      
+  responses:
+    "200":
+      $ref: "../swagger.yaml#/components/responses/SuccessResponse"
+    "204":
+      $ref: "../swagger.yaml#/components/responses/NoContentResponse"
+    "5XX":
+      $ref: "../swagger.yaml#/components/responses/ErrorResponse" 

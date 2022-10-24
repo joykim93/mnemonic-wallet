@@ -1,11 +1,6 @@
 import lightwallet from 'eth-lightwallet'
-import * as bip39 from 'bip39';
-import Web3 from 'web3';
-import HDKey from 'hdkey';
-import BlcokchainUtil from '../utility/BlockchainUtil';
-
-const chain = 'goerli';
-let root : any;
+import ApiResponse from '../utility/apiResponse';
+let keyStoreInstance : any;
 
 export default class WalletService {
     
@@ -13,6 +8,30 @@ export default class WalletService {
         try {
             let mnemomic = lightwallet.keystore.generateRandomSeed();
             return mnemomic;    
+        }   
+        catch (err) {
+            throw(err);
+        } 
+    }
+
+    static async getWalletAddress(password: string, mnemonic: string, res: any) {    
+        try {
+            lightwallet.keystore.createVault(
+                {
+                    password,
+                    seedPhrase: mnemonic,
+                    hdPathString: "m/0'/0'/0'",
+                },
+                function (err: any, ks: any) {
+                    keyStoreInstance = ks;
+                    keyStoreInstance.keyFromPassword(password, async (err: any, pwDerivedKey: any) => {
+                        keyStoreInstance.generateNewAddress(pwDerivedKey, 1);
+                        const walletAddress = keyStoreInstance.getAddresses().toString() as string;
+
+                        return ApiResponse.result(res, { walletAddress: walletAddress }, 201);
+                    });
+                }
+            );
         }   
         catch (err) {
             throw(err);
